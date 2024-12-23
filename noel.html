@@ -128,24 +128,24 @@
         }
 
         .snowflake {
-        position: fixed;
-        top: -10px;
-        animation: snowfall 12s linear infinite; /* Increase duration for smoother fall */
-        color: white;
-        text-shadow: 0px 0px 5px #fff;
-        z-index: 1000;
-    }
+            position: fixed;
+            top: -10px;
+            animation: snowfall 20s linear infinite; /* Increased duration for smoother fall */
+            color: white;
+            text-shadow: 0px 0px 5px #fff;
+            z-index: 1000;
+        }
 
-    @keyframes snowfall {
-        0% {
-            transform: translateY(-100px);
-            opacity: 1;
+        @keyframes snowfall {
+            0% {
+                transform: translateY(-100px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh); /* Ensure snowflakes fall all the way */
+                opacity: 0;
+            }
         }
-        100% {
-            transform: translateY(100vh); /* Ensure snowflakes fall all the way */
-            opacity: 0;
-        }
-    }
 
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -238,13 +238,14 @@
     <img class="santa" src="ongianoel.png" alt="Santa on sleigh">
     <script>
         function createSnowflakes() {
-            for (let i = 0; i < 50; i++) {
+            const snowflakeCount = 10; // Reduced number of snowflakes
+            for (let i = 0; i < snowflakeCount; i++) {
                 const snowflake = document.createElement('div');
                 snowflake.classList.add('snowflake');
                 snowflake.textContent = '❄';
                 snowflake.style.left = Math.random() * 100 + 'vw';
-                snowflake.style.animationDuration = Math.random() * 3 + 7 + 's';
-                snowflake.style.fontSize = Math.random() * 10 + 15 + 'px';
+                snowflake.style.animationDuration = Math.random() * 5 + 12 + 's'; // Slower animation
+                snowflake.style.fontSize = Math.random() * 5 + 15 + 'px'; // Smaller snowflakes
                 document.body.appendChild(snowflake);
 
                 snowflake.addEventListener('animationend', () => {
@@ -253,7 +254,7 @@
             }
         }
 
-        setInterval(createSnowflakes, 500);
+        setInterval(createSnowflakes, 1000); // Fewer snowflakes generated at intervals
 
         function updateClock() {
             const clock = document.getElementById('clock');
