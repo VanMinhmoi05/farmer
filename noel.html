@@ -3,138 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Christmas Web Page</title>
+    <title>Christmas Tree</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&display=swap');
+
         body {
             margin: 0;
-            overflow: hidden;
-            background: linear-gradient(to bottom, #003366, #6699cc);
+            padding: 0;
+            background: linear-gradient(to bottom, #001f33, #003f66);
+            color: white;
+            font-family: 'Mountains of Christmas', cursive;
         }
-        canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .container {
+            text-align: center;
+            padding: 20px;
+            position: relative;
         }
-        #tree {
-            position: absolute;
-            bottom: 50px;
-            left: 50px;
-            width: 200px;
-            height: 300px;
-            background: url('tree.png') no-repeat center;
+        .title {
+            font-size: 3.5rem;
+            margin-top: 50px;
+            text-shadow: 3px 3px 5px #000;
+            color: #ffcccc;
+        }
+        .subtitle {
+            font-size: 2rem;
+            margin: 20px 0;
+            text-shadow: 2px 2px 3px #000;
+            color: #ffe6e6;
+        }
+        .tree {
+            position: relative;
+            margin: 50px auto;
+            width: 500px;
+            height: 650px;
+            background: url('cay.png') no-repeat center center;
             background-size: contain;
-            animation: twinkle 1s infinite;
+            animation: zoomInOut 5s infinite;
         }
-        @keyframes twinkle {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(1.5); }
+        @keyframes zoomInOut {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
         }
-        #santa {
+        .photo {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 3px solid white;
+            animation: float 5s ease-in-out infinite;
+        }
+        .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(-10px);
+            }
+            50% {
+                transform: translateY(10px);
+            }
+        }
+        .side-photo {
             position: absolute;
             top: 50%;
-            left: -300px;
-            width: 300px;
-            height: 200px;
-            background: url('santa.png') no-repeat center;
-            background-size: contain;
-            animation: moveSanta 10s linear infinite;
+            transform: translateY(-50%);
+            width: 120px;
+            height: 120px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 3px solid white;
+            animation: sideFloat 5s ease-in-out infinite;
         }
-        @keyframes moveSanta {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(150vw); }
+        .side-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
-        .decorative-image {
+        @keyframes sideFloat {
+            0%, 100% {
+                transform: translateY(-10px);
+            }
+            50% {
+                transform: translateY(10px);
+            }
+        }
+        .side-photo.left {
+            left: 10%;
+        }
+        .side-photo.right {
+            right: 10%;
+        }
+        .random-photo {
             position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 3px solid white;
+            animation: float 5s ease-in-out infinite;
+        }
+        .random-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .santa {
+            position: absolute;
+            bottom: 20px;
+            right: -200px;
             width: 150px;
-            height: 150px;
-            background-size: cover;
+            animation: santa-move 15s linear infinite;
         }
-        .image1 {
-            top: 20px;
-            left: 20px;
-            background: url('decor1.png') no-repeat center;
+        @keyframes santa-move {
+            0% {
+                right: -200px;
+                bottom: 20px;
+            }
+            25% {
+                bottom: 150px;
+            }
+            50% {
+                bottom: 50px;
+            }
+            75% {
+                bottom: 200px;
+            }
+            100% {
+                right: 110%;
+                bottom: 20px;
+            }
         }
-        .image2 {
-            top: 20px;
-            right: 20px;
-            background: url('decor2.png') no-repeat center;
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            animation: snowfall 10s linear infinite;
+            color: white;
+            text-shadow: 0px 0px 5px #fff;
+            z-index: 1000;
         }
-        .image3 {
-            bottom: 20px;
-            right: 20px;
-            background: url('decor3.png') no-repeat center;
-        }
-        .image4 {
-            bottom: 20px;
-            left: 20px;
-            background: url('decor4.png') no-repeat center;
+
+        @keyframes snowfall {
+            0% {
+                transform: translateY(-100px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
-    <canvas id="snow"></canvas>
-    <div id="tree"></div>
-    <div id="santa"></div>
-    <div class="decorative-image image1"></div>
-    <div class="decorative-image image2"></div>
-    <div class="decorative-image image3"></div>
-    <div class="decorative-image image4"></div>
-    <audio autoplay loop>
-        <source src="christmas_song.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-
+    <div class="clock" id="clock">00:00:00</div>
+    <div class="container">
+        <h1 class="title">Merry Christmas, My Love!</h1>
+        <p class="subtitle">Món quà này tạo ra để giành cho công chúa của anh, chúc em bé có một mùa giáng sinh thật vui vẻ và hạnh phúc, chúc em niềm vui của em luôn nhiều bằng số bông tuyết rơi trong này, mong rằng giáng sinh năm sau ta vẫn có nhau. Yêu em rất nhiều, Merry Christmas🎄❤️</p>
+        <div class="tree"></div>
+        <div class="gate"></div>
+        <audio controls loop>
+            <source src="[LOTTE HOTELS & RESORTS] Merry Christmas means everything! - 30Seconds.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const audio = document.getElementById('background-music');
+                if (audio) {
+                    audio.play().catch(() => {
+                        console.log("Autoplay was prevented. Waiting for user interaction.");
+                    });
+                }
+            });
+        </script>
+    </div>
+    <div class="side-photo left">
+        <img src="anh1.jpg" alt="Photo 1">
+    </div>
+    <div class="side-photo right">
+        <img src="anh2.jpg" alt="Photo 2">
+    </div>
+    <div class="random-photo" style="top: 40%; left: 20%;">
+        <img src="anh3.jpg" alt="Photo 3">
+    </div>
+    <div class="random-photo" style="top: 70%; left: 25%;">
+        <img src="anh4.jpg" alt="Photo 4">
+    </div>
+    <div class="random-photo" style="top: 40%; right: 15%;">
+        <img src="anh5.jpg" alt="Photo 5">
+    </div>
+    <div class="random-photo" style="top: 90%; left: 75%;">
+        <img src="anh6.jpg" alt="Photo 6">
+    </div>
+    <div class="random-photo" style="top: 60%; right: 30%;">
+        <img src="anh7.jpg" alt="Photo 7">
+    </div>
+    <div class="random-photo" style="top: 90%; left: 10%;">
+        <img src="anh8.jpg" alt="Photo 8">
+    </div>
+    <img class="santa" src="ongianoel.png" alt="Santa on sleigh">
     <script>
-        const canvas = document.getElementById('snow');
-        const ctx = canvas.getContext('2d');
-        
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        const snowflakes = [];
-
         function createSnowflakes() {
-            for (let i = 0; i < 100; i++) {
-                snowflakes.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    radius: Math.random() * 3 + 1,
-                    speed: Math.random() * 1 + 0.5
+            for (let i = 0; i < 50; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake');
+                snowflake.textContent = '❄';
+                snowflake.style.left = Math.random() * 100 + 'vw';
+                snowflake.style.animationDuration = Math.random() * 3 + 7 + 's';
+                snowflake.style.fontSize = Math.random() * 10 + 15 + 'px';
+                document.body.appendChild(snowflake);
+
+                snowflake.addEventListener('animationend', () => {
+                    snowflake.remove();
                 });
             }
         }
 
-        function drawSnowflakes() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = 'white';
-            ctx.beginPath();
+        setInterval(createSnowflakes, 500);
 
-            snowflakes.forEach(snowflake => {
-                ctx.moveTo(snowflake.x, snowflake.y);
-                ctx.arc(snowflake.x, snowflake.y, snowflake.radius, 0, Math.PI * 2);
-            });
-
-            ctx.fill();
+        function updateClock() {
+            const clock = document.getElementById('clock');
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            clock.textContent = `${hours}:${minutes}:${seconds}`;
         }
 
-        function updateSnowflakes() {
-            snowflakes.forEach(snowflake => {
-                snowflake.y += snowflake.speed;
-                if (snowflake.y > canvas.height) {
-                    snowflake.y = 0;
-                    snowflake.x = Math.random() * canvas.width;
-                }
-            });
-        }
-
-        function animate() {
-            drawSnowflakes();
-            updateSnowflakes();
-            requestAnimationFrame(animate);
-        }
-
-        createSnowflakes();
-        animate();
+        setInterval(updateClock, 1000);
     </script>
 </body>
 </html>
